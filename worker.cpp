@@ -7,6 +7,8 @@
 #include <QDebug>
 #include <QSqlQuery>
 #include <iostream>
+#include <QMessageBox>
+#include <opencv2/opencv.hpp>
 using std::cout;
 
 extern int R[256][256];
@@ -57,10 +59,19 @@ videoworker::videoworker(QLabel *label,int &id)
     connect(reco, SIGNAL(readyJson()), this, SLOT(readJsonSlot()));
     connect(this,SIGNAL(reco_start()),this,SLOT(begin_reco()));
 
+    cap.open(std::string("/dev/video7"));
 
+}
+
+videoworker::~videoworker()
+{
+    if(cap.isOpened())
+        cap.release();
 }
 void videoworker::run()
 {
+    cvVideoShow();
+    return;
     //视频处理理理
     /************** 准备YUV-RGB映射表 **************/
 
@@ -190,6 +201,47 @@ void videoworker::run()
         i++;
     }
     close(camfd);
+}
+
+void videoworker::cvVideoShow()
+{
+    cv::Mat mat;
+    while(1)
+    {
+        cap >> mat;
+        if(mat.empty())
+            break;
+        cv::cvtColor(mat, mat, CV_BGR2RGB);
+        QImage image(mat.data, mat.cols, mat.rows, mat.step, QImage::Format_RGB888);
+        label->setPixmap(QPixmap::fromImage(image));
+
+        if(flag == true)
+        {
+            qDebug()<<"抓拍";
+
+            //rgbtojpg(rgb);
+            //将图片路径存入数据库对应的位置
+            reco->setImg(QString("%1").arg(jpgname));
+            //reco->start();
+            emit reco_start();
+            //emit sendjpgpath(jpgname,"测试1122");
+
+            //query.exec(tmp);
+            flag=false;
+
+        }
+
+        while(stop_flag&&destroy!=true)
+        {
+            sleep(1);//避免循环占用过多资源
+        }
+
+        if(destroy)
+        {
+            //free(rgb)
+            break;
+        }
+    }
 }
 void videoworker::readJsonSlot()
 {

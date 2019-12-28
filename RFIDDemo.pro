@@ -41,16 +41,12 @@ HEADERS += \
     common.h \
     caminfo.h \
     video_yuv.h \
-    jpeglib.h \
-    jconfig.h \
-    jerror.h \
-    jmorecfg.h \
     recocard.h \
     texttosour.h
 
 FORMS += \
         widget.ui
-
+INCLUDEPATH += /home/gec/tools/jpglib/include
 LIBS += -L/home/gec/tools/jpglib/lib -ljpeg
 
-
+INCLUDEPATH += /home/gec/software/arm-opencv-3.4.2/include

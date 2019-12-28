@@ -21,6 +21,14 @@
 #include <QStringList>
 #include <recocard.h>
 #include "texttosour.h"
+
+#include <opencv2/core.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/opencv.hpp>
+
+using namespace cv;
+
 class worker : public QThread//语音播报线程
 {
 public:
@@ -38,6 +46,7 @@ class videoworker : public QThread//视频输出线程
 
 public:
     explicit videoworker(QLabel *label,int &id);
+    ~videoworker();
     void run() override;
 
     bool flag;//该标志为真则拍照保存
@@ -47,6 +56,12 @@ public:
 private:
     QLabel *label;
     recoCard *reco;
+
+    // 摄像头
+    cv::VideoCapture cap;
+
+    void cvVideoShow(void);
+
 signals:
     void sendjpgpath(char *path,QString _carid);
     void reco_start();

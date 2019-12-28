@@ -18,7 +18,7 @@ set(RESOURCE_DIR resources/resources.qrc)
 
 
 # QT
-set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /home/gec/tools/Qt-Embedded/Qt-Embedded-5.7.0/lib/cmake)
+set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /usr/local/Qt-Embedded-5.7.0/lib/cmake)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Concurrent REQUIRED)
@@ -41,7 +41,9 @@ endif(Qt5Widgets_FOUND)
 # arm opencv 3.4.2
 set(CMAKE_PREFIX_PATH ${CMAKE_PREFIX_PATH} /home/gec/software/arm-opencv-3.4.2/share)
 find_package(OpenCV 3.4.2 REQUIRED)
-link_libraries(${OpenCV})
+include_directories(${OpenCV_INCLUDE_DIRS})
+message("OpenCV_INCLUDE_DIRS : ${OpenCV_INCLUDE_DIRS}")
+link_libraries(${OpenCV_LIBS})
 
 # jpeg
 set(JPEG_PREFIX /home/gec/tools/jpglib)
