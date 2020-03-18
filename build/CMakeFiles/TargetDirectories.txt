@@ -1,0 +1,8 @@
+/a/project/RFIDDemo/build/CMakeFiles/install/strip.dir
+/a/project/RFIDDemo/build/CMakeFiles/edit_cache.dir
+/a/project/RFIDDemo/build/CMakeFiles/install.dir
+/a/project/RFIDDemo/build/CMakeFiles/rebuild_cache.dir
+/a/project/RFIDDemo/build/CMakeFiles/GraduationDemo.dir
+/a/project/RFIDDemo/build/CMakeFiles/list_install_components.dir
+/a/project/RFIDDemo/build/CMakeFiles/install/local.dir
+/a/project/RFIDDemo/build/CMakeFiles/GraduationDemo_autogen.dir
